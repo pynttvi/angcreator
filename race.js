@@ -5,14 +5,9 @@ app.controller("RaceController", function ($scope, $http) {
 
 
     $scope.$watch('$viewContentLoaded', function () {
-        getRaces()
+        getRaces();
     });
 
-    $scope.understand = "I now understand how the scope works!";
-    $scope.inputValue = "";
-
-    $scope.selectedPerson = 0;
-    $scope.selectedGenre = null;
     $scope.races = [];
 
     $scope.status = {
