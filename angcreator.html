@@ -89,26 +89,55 @@
             <div ng-controller='GuildController'>
 
                 <div data-guild-list id="guild-box" class="scrollable-menu">
-                    <table role="menu">
-                        <tr>
-                            <td>Free levels</td>
-                            <td><input id="free-levels" type="number" ng-model="reinc.freeLevels" ng-change="{{updateFreeLevels()}}"></td>
-                        </tr>
-                        <tr ng-repeat="guild in guilds">
-                            <td>{{guild.name}}</td>
-                            <td><input id="guild-{{guild.id}}" type="number"
-                                       ng-model="guild.chosenLevels" value="0" ng-change="{{updateGuild(guild)}}"></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-primary" ng-model="guild.chosenLevels" btn-checkbox
+                    <ul role="menu">
+                        <li>
+                            <span class="guild-label">Free Levels</span>
+                            <span class="guild-levels">
+                                <input id="free-levels" type="number" ng-model="reinc.freeLevels"
+                                       ng-change="{{updateFreeLevels()}}"></td>
+                                                       </span>
+                        </li>
+                        <div ng-repeat="guild in guilds">
+                            <li>
+                                <span class="guild-label">{{guild.name}}</span>
+                            <span class="guild-levels">
+                            <input id="guild-{{guild.id}}" type="number"
+                                   ng-model="guild.chosenLevels" value="0"
+                                   ng-change="{{updateGuild(guild)}}">
+                            </span>
+                            <span class="max-guild-button">
+                                <button type="button" class="btn btn-primary" ng-model="guild.chosenLevels"
+                                        btn-checkbox
                                         btn-checkbox-true="{{availableLevels(guild)}}" btn-checkbox-false="">
                                     Max
                                 </button>
-                            </td>
-                        </tr>
-                    </table>
+                            </span>
+                            </li>
+                            <div id="subguild-area" ng-if="guild.chosenLevels === 45">
+
+                                <li ng-repeat="subguild in guild.subguilds">
+                                    <span class="guild-label">{{subguild.name}}</span>
+
+                            <span class="guild-levels">
+                                <input id="subguild-{{subguild.name}}" type="number"
+                                       ng-model="subguild.chosenLevels" value="0">
+                            </span>
+
+                             <span class="max-guild-button">
+                                <button type="button" class="btn btn-primary"
+                                        ng-model="subguild.chosenLevels" btn-checkbox
+                                        btn-checkbox-true="{{availableLevels(subguild)}}" btn-checkbox-false="">
+                                    Max
+                                </button>
+                            </span>
+
+                                </li>
+                            </div>
+                        </div>
+                    </ul>
                 </div>
+                <br/>
+                <br/>
             </div>
 
         </tab>
