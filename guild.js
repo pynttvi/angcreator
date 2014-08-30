@@ -47,7 +47,6 @@ app.controller("GuildController", function ($scope, $http) {
                     levels += $scope.reinc.guilds[i].subguilds[j].chosenLevels;
             }
         }
-        console.log(levels);
         return levels;
     }
 
@@ -150,7 +149,9 @@ app.controller("GuildController", function ($scope, $http) {
                             if (exists == false) {
                                 guild.subguilds.push({
                                     name: cols[0],
-                                    levels: cols[1]
+                                    levels: cols[1],
+                                    chosenLevels: 0,
+                                    abilities:[]
                                 });
                             }
                         }

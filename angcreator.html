@@ -12,6 +12,7 @@
     <script src="main.js" type="text/javascript"></script>
     <script src="race.js" type="text/javascript"></script>
     <script src="guild.js" type="text/javascript"></script>
+    <script src="abilities.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
@@ -120,7 +121,7 @@
 
                             <span class="guild-levels">
                                 <input id="subguild-{{subguild.name}}" type="number"
-                                       ng-model="subguild.chosenLevels" value="0">
+                                       ng-model="subguild.chosenLevels">
                             </span>
 
                              <span class="max-guild-button">
@@ -136,14 +137,48 @@
                         </div>
                     </ul>
                 </div>
-                <br/>
-                <br/>
             </div>
 
         </tab>
 
 
-        <tab heading="Skills"></tab>
+        <tab heading="Skills" select="getSkills()">
+
+            <div ng-controller='AbilitiesController'>
+
+                <div ng-repeat="guild in reinc.guilds">
+                    <div data-guild-list class="ability-box">
+                        <label>{{guild.name}}</label>
+                        <ul>
+                            <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                                <li ng-if="skill.guild === guild.name">
+                                    <span class="ability-label">{{skill.name}}{{skill.guild}}</span>
+                                    <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                                           ng-model="skill.trainedPercent" value="0" step="5"/>
+                                    <span ability-max> / {{skill.percent}}</span>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <div data-guild-list class="ability-box" ng-repeat="subguild in guild.subguilds">
+                        <label>{{subguild.name}}</label>
+                        <ul>
+                            <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                                <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
+                                    <span class="ability-label">{{skill.name}}{{skill.guild}}</span>
+                                    <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                                           ng-model="skill.trainedPercent" value="0" step="5"/>
+                                    <span ability-max> / {{skill.percent}}</span>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </tab>
+
         <tab heading="Spells"></tab>
 
 

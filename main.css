@@ -16,6 +16,7 @@
 #race-select {
     float: right;
 }
+
 #race-box {
     padding: 5px;
     border-style: solid;
@@ -24,8 +25,9 @@
 
 }
 
-#guild-box {
+#guild-box, .ability-box {
     padding: 5px;
+    margin: 5px;
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
@@ -34,19 +36,23 @@
 
 }
 
-.guild-label {
-    width: 180px;
+.ability-input {
+    max-width: 50px;
+
+}
+
+.guild-label,.ability-label {
+    width: 200px;
     float: left;
 }
-#guild-box ul
-{
+
+ul {
     list-style-type: none;
 }
 
 #subguild-area {
     margin-left: 30px;
 }
-
 
 #race-stat-table td {
     width: 150px;
