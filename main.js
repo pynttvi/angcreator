@@ -8,27 +8,48 @@ app.controller("MainController", function ($scope, $http, $filter) {
 
     $scope.reinc = {
         freeLevels: 0,
-        guilds: []
+        guilds: [],
+        wishes:{
+            greater:{
+                knowledge: false,
+                physical: false,
+                magical: false,
+                critical: false,
+                haste:false,
+                stats: false
+
+            },
+            lesser: {
+                knowledge: false,
+                physical: false,
+                magical: false,
+                critical: false,
+                haste:false,
+                stats: false,
+                thickSkin:false
+            },
+            minor:{
+                str:false,
+                con:false,
+                dex:false,
+                int:false,
+                wis:false,
+                cha:false,
+                trueSeeing:false,
+                lucky:false
+            }
+        }
     };
 
 
-    $scope.getSkills = function () {
+
+    $scope.getAbilities = function () {
         setTimeout(function () {
-
             angular.forEach($scope.reinc.guilds, function (guild, i) {
-                getAbilities(guild);
-                angular.forEach(guild.subguilds, function (subguild, j) {
-                    if (subguild.chosenLevels > 0) {
-                        getAbilities(subguild);
-                        alert(subguild.abilities.length);
-                    }
-                });
+                if (!guild.abilities)
+                    getAbilities(guild);
             });
-
         });
-
-        //     alert($scope.reinc.guilds[0].abilities[0].name);
-
     };
 
     function getAbilities(guild) {

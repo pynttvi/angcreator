@@ -31,76 +31,76 @@
 <body>
 
 <div id="wrapper">
-    <!--
-        <select ng-model='selectedPerson' ng-options='obj.name for obj in races'></select>
-        <input ng-bin='obj.str in races[selectedPerson.id].str'/>-->
+<!--
+    <select ng-model='selectedPerson' ng-options='obj.name for obj in races'></select>
+    <input ng-bin='obj.str in races[selectedPerson.id].str'/>-->
 
-    <tabset>
+<tabset>
 
-        <tab heading="General">
-            <br/>
+<tab heading="General">
+    <br/>
 
-            <div ng-controller='RaceController'>
-                <div id="race-box">
-                    <div id="race-select" class="btn-group" dropdown is-open="status.isopen">
-                        <button type="button" class="btn btn-primary dropdown-toggle">
-                            Races <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                            <li ng-repeat="choice in races">
-                                <span ng-click ng-mouseover="reinc.race = choice">{{choice.name}}</span>
-                            </li>
-                            <li class="divider"></li>
+    <div ng-controller='RaceController'>
+        <div id="race-box">
+            <div id="race-select" class="btn-group" dropdown is-open="status.isopen">
+                <button type="button" class="btn btn-primary dropdown-toggle">
+                    Races <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable-menu" role="menu">
+                    <li ng-repeat="choice in races">
+                        <span ng-click ng-mouseover="reinc.race = choice">{{choice.name}}</span>
+                    </li>
+                    <li class="divider"></li>
 
-                        </ul>
-                    </div>
-                    <br/>
-                    <br/>
-
-                    <div id="race-stat-table" ng-if="reinc.race">
-                        <label>Race: </label> {{reinc.race.name}}
-                        <br/>
-                        <table>
-                            <tr>
-                                <td><label>Str: </label> {{reinc.race.str}}</td>
-                                <td><label>Dex: </label> {{reinc.race.dex}}</td>
-                                <td><label>Con: </label> {{reinc.race.con}}</td>
-                                <td><label>Int: </label> {{reinc.race.int}}</td>
-                                <td><label>Wis: </label> {{reinc.race.wis}}</td>
-                            </tr>
-                            <tr>
-                                <td><label>Cha: </label> {{reinc.race.cha}}</td>
-                                <td><label>Size: </label> {{reinc.race.siz}}</td>
-                                <td><label>Exp: </label> {{reinc.race.exp}}</td>
-                                <td><label>Spr: </label> {{reinc.race.spr}}</td>
-                                <td><label>Hpr: </label> {{reinc.race.hpr}}</td>
-                            </tr>
-                            <tr>
-                                <td><label>Skillmax: </label> {{reinc.race.skimax}}</td>
-                                <td><label>Spellmax: </label> {{reinc.race.spemax}}</td>
-                                <td><label>Skillcost: </label> {{reinc.race.skicost}}</td>
-                                <td><label>Spellcost: </label> {{reinc.race.specost}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+                </ul>
             </div>
             <br/>
+            <br/>
 
-            <div ng-controller='GuildController'>
+            <div id="race-stat-table" ng-if="reinc.race">
+                <label>Race: </label> {{reinc.race.name}}
+                <br/>
+                <table>
+                    <tr>
+                        <td><label>Str: </label> {{reinc.race.str}}</td>
+                        <td><label>Dex: </label> {{reinc.race.dex}}</td>
+                        <td><label>Con: </label> {{reinc.race.con}}</td>
+                        <td><label>Int: </label> {{reinc.race.int}}</td>
+                        <td><label>Wis: </label> {{reinc.race.wis}}</td>
+                    </tr>
+                    <tr>
+                        <td><label>Cha: </label> {{reinc.race.cha}}</td>
+                        <td><label>Size: </label> {{reinc.race.siz}}</td>
+                        <td><label>Exp: </label> {{reinc.race.exp}}</td>
+                        <td><label>Spr: </label> {{reinc.race.spr}}</td>
+                        <td><label>Hpr: </label> {{reinc.race.hpr}}</td>
+                    </tr>
+                    <tr>
+                        <td><label>Skillmax: </label> {{reinc.race.skimax}}</td>
+                        <td><label>Spellmax: </label> {{reinc.race.spemax}}</td>
+                        <td><label>Skillcost: </label> {{reinc.race.skicost}}</td>
+                        <td><label>Spellcost: </label> {{reinc.race.specost}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br/>
 
-                <div data-guild-list id="guild-box" class="scrollable-menu">
-                    <ul role="menu">
-                        <li>
-                            <span class="guild-label">Free Levels</span>
+    <div ng-controller='GuildController'>
+
+        <div data-guild-list id="guild-box" class="scrollable-menu">
+            <ul role="menu">
+                <li>
+                    <span class="guild-label">Free Levels</span>
                             <span class="guild-levels">
                                 <input id="free-levels" type="number" ng-model="reinc.freeLevels"
                                        ng-change="{{updateFreeLevels()}}"></td>
                                                        </span>
-                        </li>
-                        <div ng-repeat="guild in guilds">
-                            <li>
-                                <span class="guild-label">{{guild.name}}</span>
+                </li>
+                <div ng-repeat="guild in guilds">
+                    <li ng-if="guild.type === 'primary'">
+                        <span class="guild-label">{{guild.name}}</span>
                             <span class="guild-levels">
                             <input id="guild-{{guild.id}}" type="number"
                                    ng-model="guild.chosenLevels" value="0"
@@ -113,15 +113,16 @@
                                     Max
                                 </button>
                             </span>
-                            </li>
-                            <div id="subguild-area" ng-if="guild.chosenLevels === 45">
-
-                                <li ng-repeat="subguild in guild.subguilds">
-                                    <span class="guild-label">{{subguild.name}}</span>
+                    </li>
+                    <div id="subguild-area" ng-if="guild.chosenLevels === 45">
+                        <div ng-repeat="subguild in guilds">
+                            <li ng-if="subguild.type === 'sub' && subguild.parent == guild.name">
+                                <span class="guild-label">{{subguild.name}}</span>
 
                             <span class="guild-levels">
                                 <input id="subguild-{{subguild.name}}" type="number"
-                                       ng-model="subguild.chosenLevels">
+                                       ng-model="subguild.chosenLevels"
+                                       ng-change="{{updateGuild(subguild)}}">
                             </span>
 
                              <span class="max-guild-button">
@@ -132,63 +133,332 @@
                                 </button>
                             </span>
 
-                                </li>
-                            </div>
+                            </li>
                         </div>
-                    </ul>
-                </div>
-            </div>
-
-        </tab>
-
-
-        <tab heading="Skills" select="getSkills()">
-
-            <div ng-controller='AbilitiesController'>
-
-                <div ng-repeat="guild in reinc.guilds">
-                    <div data-guild-list class="ability-box">
-                        <label>{{guild.name}}</label>
-                        <ul>
-                            <div ng-repeat="skill in getAllAbilitiesByType('skill')">
-                                <li ng-if="skill.guild === guild.name">
-                                    <span class="ability-label">{{skill.name}}{{skill.guild}}</span>
-                                    <input id="skill-{{skill.name}}" class="ability-input" type="number"
-                                           ng-model="skill.trainedPercent" value="0" step="5"/>
-                                    <span ability-max> / {{skill.percent}}</span>
-                                </li>
-                            </div>
-                        </ul>
-                    </div>
-                    <div data-guild-list class="ability-box" ng-repeat="subguild in guild.subguilds">
-                        <label>{{subguild.name}}</label>
-                        <ul>
-                            <div ng-repeat="skill in getAllAbilitiesByType('skill')">
-                                <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
-                                    <span class="ability-label">{{skill.name}}{{skill.guild}}</span>
-                                    <input id="skill-{{skill.name}}" class="ability-input" type="number"
-                                           ng-model="skill.trainedPercent" value="0" step="5"/>
-                                    <span ability-max> / {{skill.percent}}</span>
-                                </li>
-                            </div>
-                        </ul>
                     </div>
                 </div>
+            </ul>
+        </div>
+    </div>
+
+</tab>
+
+
+<tab heading="Skills" select="getAbilities()">
+
+    <div ng-controller='AbilitiesController'>
+
+        <div ng-repeat="guild in reinc.guilds">
+            <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
+                <label>{{guild.name}}</label>
+                <ul>
+                    <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                        <li ng-if="skill.guild === guild.name">
+                            <span class="ability-label">{{skill.name}}</span>
+                            <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                                   ng-model="skill.trainedPercent" value="0" step="5"
+                                   ng-change="validateAbility(skill)"/>
+                            <span class="ability-max"> / {{skill.percent}}</span>
+                                    <span class="max-ability-button">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-model="skill.trainedPercent" btn-checkbox
+                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                            Max
+                                        </button>
+                                    </span>
+                        </li>
+                    </div>
+                </ul>
             </div>
+        </div>
+
+        <div ng-repeat="subguild in reinc.guilds">
+            <div data-guild-list class="ability-box"
+                 ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
+                <label>{{subguild.name}}</label>
+                <ul>
+                    <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                        <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
+                            <span class="ability-label">{{skill.name}}</span>
+                            <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                                   ng-model="skill.trainedPercent" step="5"
+                                   ng-change="validateAbility(skill)"/>
+                            <span class="ability-max"> / {{skill.percent}}</span>
+                                    <span class="max-ability-button">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-model="skill.trainedPercent" btn-checkbox
+                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                            Max
+                                        </button>
+                                    </span>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
-        </tab>
+</tab>
 
-        <tab heading="Spells"></tab>
+<tab heading="Spells" select="getAbilities()">
 
+    <div ng-controller='AbilitiesController'>
 
-        <tab select="alertMe()">
-            <tab-heading>
-                <i class="glyphicon glyphicon-bell"></i> Finish
-            </tab-heading>
-            I've got an HTML heading, and a select callback. Pretty cool!
-        </tab>
-    </tabset>
+        <div ng-repeat="guild in reinc.guilds">
+            <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
+                <label>{{guild.name}}</label>
+                <ul>
+                    <div ng-repeat="skill in getAllAbilitiesByType('spell')">
+                        <li ng-if="skill.guild === guild.name">
+                            <span class="ability-label">{{skill.name}}</span>
+                            <input id="spell-{{skill.name}}" class="ability-input" type="number"
+                                   ng-model="skill.trainedPercent" value="0" step="5"
+                                   ng-change="validateAbility(skill)"/>
+                            <span class="ability-max"> / {{skill.percent}}</span>
+                                    <span class="max-ability-button">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-model="skill.trainedPercent" btn-checkbox
+                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                            Max
+                                        </button>
+                                    </span>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <div ng-repeat="subguild in reinc.guilds">
+            <div data-guild-list class="ability-box"
+                 ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
+                <label>{{subguild.name}}</label>
+                <ul>
+                    <div ng-repeat="skill in getAllAbilitiesByType('spell')">
+                        <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
+                            <span class="ability-label">{{skill.name}}</span>
+                            <input id="spell-{{skill.name}}" class="ability-input" type="number"
+                                   ng-model="skill.trainedPercent" step="5"
+                                   ng-change="validateAbility(skill)"/>
+                            <span class="ability-max"> / {{skill.percent}}</span>
+                                    <span class="max-ability-button">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-model="skill.trainedPercent" btn-checkbox
+                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                            Max
+                                        </button>
+                                    </span>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</tab>
+
+<tab heading="Wish">
+
+    <table id="wish-table">
+        <tr>
+            <th>Greater</th>
+            <th></th>
+            <th>Lesser</th>
+            <th></th>
+            <th>Minor</th>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Greater knowledge: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.knowledge"/>
+            </td>
+
+            <td class="label-col">
+                <span>Lesser knowledge: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.knowledge"/>
+            </td>
+            <td class="label-col">
+
+                <span>Strength: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.str"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Superior stats: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.stats"/>
+            </td>
+            <td class="label-col">
+                <span>Better stats: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.stats"/>
+            </td>
+            <td class="label-col">
+                <span>Constitution: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.con"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Greate physical improvement: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.physical"/>
+            </td>
+            <td class="label-col">
+                <span>Lesser physical improvement: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.physical"/>
+            </td>
+            <td class="label-col">
+                <span>Dexterity: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.dex"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Greate magical improvement: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.magical"/>
+            </td>
+            <td class="label-col">
+                <span>Lesser magical improvement: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.magical"/>
+            </td>
+            <td class="label-col">
+                <span>Intelligence: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.int"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Greate critical blow: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.critical"/>
+            </td>
+            <td class="label-col">
+                <span>Lesser critical blow: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.critical"/>
+            </td>
+            <td class="label-col">
+                <span>Wisdom: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.wis"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+                <span>Greate casting speed: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.greater.haste"/>
+            </td>
+            <td class="label-col">
+                <span>Lesser casting speed: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.haste"/>
+            </td>
+            <td class="label-col">
+                <span>Charisma: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.cha"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+            </td>
+            <td class="input-col">
+            </td>
+            <td class="label-col">
+                <span>Thick skin: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.lesser.thickSkin"/>
+            </td>
+            <td class="label-col">
+                <span>True seeing: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.trueSeeing"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-col">
+            </td>
+            <td class="input-col">
+            </td>
+            <td class="label-col">
+            </td>
+            <td class="input-col">
+            </td>
+            <td class="label-col">
+                <span>Lucky: </span>
+            </td>
+            <td class="input-col">
+                <input type="checkbox"
+                       ng-model="reinc.wishes.minor.lucky"/>
+            </td>
+        </tr>
+    </table>
+
+</tab>
+
+<tab heading="Stats">
+
+    I've got an HTML heading, and a select callback. Pretty cool!
+</tab>
+
+<tab select="alertMe()">
+    <tab-heading>
+        <i class="glyphicon glyphicon-bell"></i> Finish
+    </tab-heading>
+    I've got an HTML heading, and a select callback. Pretty cool!
+</tab>
+</tabset>
 
 </div>
 </body>

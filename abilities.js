@@ -34,5 +34,18 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
         return allSkills;
     }
 
+    $scope.validateAbility = function (ability) {
+        var max = parseInt(ability.percent);
+
+        if (ability.trainedPercent > 10)
+            ability.trainedPercent = Math.round(( ability.trainedPercent / 5)) * 5;
+
+        if (ability.trainedPercent < 0)
+            ability.trainedPercent = 0;
+
+        if (ability.trainedPercent > max)
+            ability.trainedPercent = max;
+    };
+
 });
 
