@@ -9,13 +9,21 @@ app.controller("MainController", function ($scope, $http, $filter) {
     $scope.reinc = {
         freeLevels: 0,
         guilds: [],
-        wishes:{
-            greater:{
+        stats: {
+            str: 0,
+            con: 0,
+            dex: 0,
+            int: 0,
+            wis: 0,
+            cha: 0
+        },
+        wishes: {
+            greater: {
                 knowledge: false,
                 physical: false,
                 magical: false,
                 critical: false,
-                haste:false,
+                haste: false,
                 stats: false
 
             },
@@ -24,23 +32,31 @@ app.controller("MainController", function ($scope, $http, $filter) {
                 physical: false,
                 magical: false,
                 critical: false,
-                haste:false,
+                haste: false,
                 stats: false,
-                thickSkin:false
+                thickSkin: false
             },
-            minor:{
-                str:false,
-                con:false,
-                dex:false,
-                int:false,
-                wis:false,
-                cha:false,
-                trueSeeing:false,
-                lucky:false
+            minor: {
+                str: false,
+                con: false,
+                dex: false,
+                int: false,
+                wis: false,
+                cha: false,
+                trueSeeing: false,
+                lucky: false
             }
         }
     };
 
+    $scope.validateStat = function (stat) {
+        var myStat = parseInt(stat);
+        if (myStat > 50)
+            stat = 50;
+
+        if (myStat < 0)
+            stat = 0;
+    }
 
 
     $scope.getAbilities = function () {

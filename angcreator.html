@@ -448,8 +448,46 @@
 </tab>
 
 <tab heading="Stats">
-
-    I've got an HTML heading, and a select callback. Pretty cool!
+    <div id="stats-box">
+        <ul>
+            <li>
+                <span class="stat-label">Strength:</span>
+                <input id="str" class="stat-input" type="number"
+                       ng-model="reinc.stats.str" max="50"
+                       ng-change="validateStat(reinc.stats.str)"/>
+            </li>
+            <li>
+                <span class="stat-label">Constitution:</span>
+                <input id="con" class="stat-input" type="number"
+                       ng-model="reinc.stats.con" max="50"
+                       ng-change="validateStat(reinc.stats.con)"/>
+            </li>
+            <li>
+                <span class="stat-label">Dexterity:</span>
+                <input id="dex" class="stat-input" type="number"
+                       ng-model="reinc.stats.dex" max="50"
+                       ng-change="validateStat(reinc.stats.dex)"/>
+            </li>
+            <li>
+                <span class="stat-label">Intelligence:</span>
+                <input id="int" class="stat-input" type="number"
+                       ng-model="reinc.stats.int" max="50"
+                       ng-change="validateStat(reinc.stats.int)"/>
+            </li>
+            <li>
+                <span class="stat-label">Wisdom:</span>
+                <input id="wis" class="stat-input" type="number"
+                       ng-model="reinc.stats.wis" max="50"
+                       ng-change="validateStat(reinc.stats.wis)"/>
+            </li>
+            <li>
+                <span class="stat-label">Charisma:</span>
+                <input id="cha" class="stat-input" type="number"
+                       ng-model="reinc.stats.cha" max="50"
+                       ng-change="validateStat(reinc.stats.cha)"/>
+            </li>
+        </ul>
+    </div>
 </tab>
 
 <tab select="alertMe()">

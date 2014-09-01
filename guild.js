@@ -108,7 +108,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
                         return;
                     }
                     if (guild.type == 'primary' && subguilds.length == 0)
-                        getSubguilds(guild);
+                        getSubguildsAndStats(guild);
                     $scope.reinc.guilds.push(guild);
                 }
             }
@@ -158,34 +158,21 @@ app.controller("GuildController", function ($scope, $http, $filter) {
         }
 
 
-        function getSubguilds(guild) {
+        function getSubguildsAndStats(guild) {
             var subguilds = getSubguildsByGuild(guild);
-            if (guild.chosenLevels == 45 && subguilds.length == 0) {
+            if (guild.chosenLevels > 0) {
                 var guildFileName = guild.name.replace(" ", "-").toLowerCase() + ".chr"
                 $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/' + guildFileName}).
                     success(function (data, status, headers, config) {
 
                         var guildFile = atob(data.content);
                         var lines = guildFile.split('\n');
-                        var subGuildsStartIndex
-                        for (var i = 0; i < lines.length; i++) {
-                            if (lines[i].contains("Subguilds:") == true)
-                                subGuildsStartIndex = i;
 
-                            if (subGuildsStartIndex != null && subGuildsStartIndex < i && lines[i] != "") {
-                                var cols = lines[i].split(" ");
-                                var found = $filter('filter')($scope.guilds, {name: cols[0]});
-                                if (found.length == 0) {
-                                    $scope.guilds.push({
-                                        name: cols[0],
-                                        levels: cols[1],
-                                        chosenLevels: "",
-                                        type: 'sub',
-                                        parent: guild.name
-                                    });
-                                }
-                            }
+                        getStatsFromFile(guild, lines);
+                        if (guild.chosenLevels == 45 && subguilds.length == 0) {
+                            getSubguildsFromFile(guild, lines);
                         }
+
                     }).
                     error(function (data, status, headers, config) {
                         alert("error:" + status);
@@ -196,7 +183,91 @@ app.controller("GuildController", function ($scope, $http, $filter) {
                 removeSubguildsFromGuild(guild);
             }
         }
+
+        function getStatsFromFile(guild, lines) {
+            var currentLevel = 0;
+            var levels = [];
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                if (line.contains("|")) {
+                    var cols = line.split("|");
+                    if (cols[1].trim() > 0) {
+                        currentLevel += 1
+
+                        var stats = parseStatsFromColumn(cols[2]);
+
+                        levels.push({
+                            level: currentLevel,
+                            stats: stats
+                        });
+                    }
+                    else if (cols[1].trim() == "Lvl" || cols[1].trim() == "=====") {
+                        alert(cols[1]);
+                    }
+                    else {
+                        var col = cols[2].trim();
+                        alert(col);
+                        if (col.length > 0)
+                            levels[i - 1].stats = parseStatsFromColumn(col);
+                    }
+                }
+            }
+
+            alert(levels[0].toString());
+        }
+
+        function parseStatsFromColumn(col) {
+            var stats = col.split(",");
+            var myStats = []
+            if (col.length > 0) {
+                angular.forEach(stats, function (stat, i) {
+                    var amount = stat.split("(")[1];
+                    if (amount) {
+                        var myAmount = amount.replace(")", "").trim();
+                        myStats.push({
+                            amount: myAmount.trim(),
+                            name: stat.split("(")[0]
+                        });
+                    }
+                });
+            } else {
+                var amount = col.split("(")[1].trim();
+                if (amount) {
+                    var myAmount = amount.replace(")", "");
+                    var name = col.split("(")[0];
+                    alert(name + myAmount);
+                    myStats.push({
+                        amount: myAmount.trim(),
+                        name: name
+                    });
+                }
+            }
+        }
+
+        function getSubguildsFromFile(guild, lines) {
+            var subGuildsStartIndex
+            for (var i = 0; i < lines.length; i++) {
+                if (lines[i].contains("Subguilds:") == true)
+                    subGuildsStartIndex = i;
+
+                if (subGuildsStartIndex != null && subGuildsStartIndex < i && lines[i] != "") {
+                    var cols = lines[i].split(" ");
+                    var found = $filter('filter')($scope.guilds, {name: cols[0]});
+                    if (found.length == 0) {
+                        $scope.guilds.push({
+                            name: cols[0],
+                            levels: cols[1],
+                            chosenLevels: "",
+                            type: 'sub',
+                            parent: guild.name
+                        });
+                    }
+                }
+            }
+
+        }
     }
+
 )
 ;
 

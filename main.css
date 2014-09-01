@@ -25,7 +25,7 @@
 
 }
 
-#guild-box, .ability-box {
+#guild-box, .ability-box,#stats-box {
     padding: 5px;
     margin: 5px;
     border-style: solid;
@@ -36,10 +36,13 @@
 
 }
 
-.ability-input {
+.ability-input, {
     float: left;
     max-width: 50px;
 
+}
+.stat-input {
+    width: 50px;
 }
 
 .ability-max {
@@ -69,6 +72,10 @@
 .guild-label, .ability-label {
     width: 250px;
     float: left;
+}
+.stat-label {
+    float: left;
+    width: 150px;
 }
 
 ul {
