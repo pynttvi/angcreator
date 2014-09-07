@@ -6,11 +6,22 @@
 
 #wrapper {
 
-    margin-top: 2%;
-    margin-left: 2%;
+    margin-top: 20px;
+    margin-left: 20px;
     float: left;
-    width: 100%;
-    max-width: 1000px;
+    width: 700px;
+}
+
+#total {
+    padding: 5px;
+    margin-top: 60px;
+    width: 300px;
+    margin-left: 2%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    float: left;
+
 }
 
 #race-select {
@@ -25,7 +36,7 @@
 
 }
 
-#guild-box, .ability-box,#stats-box {
+#guild-box, .ability-box, #stats-box {
     padding: 5px;
     margin: 5px;
     border-style: solid;
@@ -36,22 +47,22 @@
 
 }
 
-.ability-input, {
+.ability-box input {
     float: left;
-    max-width: 50px;
+    width: 50px;
 
 }
+
 .stat-input {
     width: 50px;
 }
 
-.ability-max {
-    float: left;
+.ability-box .ability-max {
     margin-right: 20px;
     min-width: 50px;
 }
 
-#wish-table{
+#wish-table {
     padding: 5px;
     margin: 5px;
     border-style: solid;
@@ -59,20 +70,28 @@
     border-color: lightgray;
 
 }
-#wish-table .label-col{
+
+#wish-table .label-col {
     width: 200px;
 }
-#wish-table .input-col{
+
+#wish-table .input-col {
     width: 50px;
 }
 
 .max-ability-button button {
+
 }
 
 .guild-label, .ability-label {
     width: 250px;
     float: left;
 }
+
+.guild-input {
+    width: 70px;
+}
+
 .stat-label {
     float: left;
     width: 150px;

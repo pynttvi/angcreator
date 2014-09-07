@@ -92,17 +92,23 @@
         <div data-guild-list id="guild-box" class="scrollable-menu">
             <ul role="menu">
                 <li>
+                    <span class="guild-label">Quest points</span>
+                            <span class="guild-levels">
+                                    <input id="qps-input" type="number" ng-model="reinc.qp" class="guild-input"/>
+                            </span>
+                </li>
+                <li>
                     <span class="guild-label">Free Levels</span>
                             <span class="guild-levels">
                                 <input id="free-levels" type="number" ng-model="reinc.freeLevels"
-                                       ng-change="{{updateFreeLevels()}}"></td>
-                                                       </span>
+                                       ng-change="{{updateFreeLevels()}}" class="guild-input"/>
+                            </span>
                 </li>
                 <div ng-repeat="guild in guilds">
                     <li ng-if="guild.type === 'primary'">
                         <span class="guild-label">{{guild.name}}</span>
                             <span class="guild-levels">
-                            <input id="guild-{{guild.id}}" type="number"
+                            <input id="guild-{{guild.id}}" type="number" class="guild-input"
                                    ng-model="guild.chosenLevels" value="0"
                                    ng-change="{{updateGuild(guild)}}">
                             </span>
@@ -120,7 +126,7 @@
                                 <span class="guild-label">{{subguild.name}}</span>
 
                             <span class="guild-levels">
-                                <input id="subguild-{{subguild.name}}" type="number"
+                                <input id="subguild-{{subguild.name}}" type="number" class="guild-input"
                                        ng-model="subguild.chosenLevels"
                                        ng-change="{{updateGuild(subguild)}}">
                             </span>
@@ -143,22 +149,20 @@
 
 </tab>
 
+<tab ng-controller='AbilitiesController' heading="Skills" select="getAbilities()">
 
-<tab heading="Skills" select="getAbilities()">
 
-    <div ng-controller='AbilitiesController'>
-
-        <div ng-repeat="guild in reinc.guilds">
-            <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
-                <label>{{guild.name}}</label>
-                <ul>
-                    <div ng-repeat="skill in getAllAbilitiesByType('skill')">
-                        <li ng-if="skill.guild === guild.name">
-                            <span class="ability-label">{{skill.name}}</span>
-                            <input id="skill-{{skill.name}}" class="ability-input" type="number"
-                                   ng-model="skill.trainedPercent" value="0" step="5"
-                                   ng-change="validateAbility(skill)"/>
-                            <span class="ability-max"> / {{skill.percent}}</span>
+    <div ng-repeat="guild in reinc.guilds">
+        <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
+            <label>{{guild.name}}</label>
+            <ul>
+                <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                    <li ng-if="skill.guild === guild.name">
+                        <span class="ability-label">{{skill.name}}</span>
+                        <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                               ng-model="skill.trainedPercent" value="0" step="5"
+                               ng-change="validateAbility(skill)"/>
+                        <span class="ability-max"> / {{skill.percent}}</span>
                                     <span class="max-ability-button">
                                         <button type="button" class="btn btn-primary"
                                                 ng-model="skill.trainedPercent" btn-checkbox
@@ -166,81 +170,75 @@
                                             Max
                                         </button>
                                     </span>
-                        </li>
-                    </div>
-                </ul>
-            </div>
-        </div>
-
-        <div ng-repeat="subguild in reinc.guilds">
-            <div data-guild-list class="ability-box"
-                 ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
-                <label>{{subguild.name}}</label>
-                <ul>
-                    <div ng-repeat="skill in getAllAbilitiesByType('skill')">
-                        <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
-                            <span class="ability-label">{{skill.name}}</span>
-                            <input id="skill-{{skill.name}}" class="ability-input" type="number"
-                                   ng-model="skill.trainedPercent" step="5"
-                                   ng-change="validateAbility(skill)"/>
-                            <span class="ability-max"> / {{skill.percent}}</span>
-                                    <span class="max-ability-button">
-                                        <button type="button" class="btn btn-primary"
-                                                ng-model="skill.trainedPercent" btn-checkbox
-                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
-                                            Max
-                                        </button>
-                                    </span>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+                    </li>
+                </div>
+            </ul>
         </div>
     </div>
 
+    <div ng-repeat="subguild in reinc.guilds">
+        <div data-guild-list class="ability-box"
+             ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
+            <label>{{subguild.name}}</label>
+            <ul>
+                <div ng-repeat="skill in getAllAbilitiesByType('skill')">
+                    <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
+                        <span class="ability-label">{{skill.name}}</span>
+                        <input id="skill-{{skill.name}}" class="ability-input" type="number"
+                               ng-model="skill.trainedPercent" step="5"
+                               ng-change="validateAbility(skill)"/>
+                        <span class="ability-max"> / {{skill.percent}}</span>
+                                    <span class="max-ability-button">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-model="skill.trainedPercent" btn-checkbox
+                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                            Max
+                                        </button>
+                                    </span>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
 
 </tab>
+<tab ng-controller='AbilitiesController' heading="Spells" select="getAbilities()" class="ability-tab">
 
-<tab heading="Spells" select="getAbilities()">
-
-    <div ng-controller='AbilitiesController'>
-
-        <div ng-repeat="guild in reinc.guilds">
-            <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
-                <label>{{guild.name}}</label>
-                <ul>
-                    <div ng-repeat="skill in getAllAbilitiesByType('spell')">
-                        <li ng-if="skill.guild === guild.name">
-                            <span class="ability-label">{{skill.name}}</span>
-                            <input id="spell-{{skill.name}}" class="ability-input" type="number"
-                                   ng-model="skill.trainedPercent" value="0" step="5"
-                                   ng-change="validateAbility(skill)"/>
-                            <span class="ability-max"> / {{skill.percent}}</span>
-                                    <span class="max-ability-button">
-                                        <button type="button" class="btn btn-primary"
-                                                ng-model="skill.trainedPercent" btn-checkbox
-                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
-                                            Max
-                                        </button>
-                                    </span>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+    <div ng-repeat="guild in reinc.guilds">
+        <div data-guild-list class="ability-box" ng-if="guild.type === 'primary' && guild.chosenLevels > 0">
+            <label>{{guild.name}}</label>
+            <ul>
+                <div ng-repeat="skill in getAllAbilitiesByType('spell')">
+                    <li ng-if="skill.guild === guild.name">
+                        <span class="ability-label">{{skill.name}}</span>
+                        <input id="spell-{{skill.name}}" class="ability-input" type="number"
+                               ng-model="skill.trainedPercent" value="0" step="5"
+                               ng-change="validateAbility(skill)"/>
+                        <span class="ability-max"> / {{skill.percent}} </span>
+                        <span class="max-ability-button">
+                            <button type="button" class="btn btn-primary" ng-model="skill.trainedPercent" btn-checkbox
+                                    btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                Max
+                            </button>
+                        </span>
+                    </li>
+                </div>
+            </ul>
         </div>
+    </div>
 
-        <div ng-repeat="subguild in reinc.guilds">
-            <div data-guild-list class="ability-box"
-                 ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
-                <label>{{subguild.name}}</label>
-                <ul>
-                    <div ng-repeat="skill in getAllAbilitiesByType('spell')">
-                        <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
-                            <span class="ability-label">{{skill.name}}</span>
-                            <input id="spell-{{skill.name}}" class="ability-input" type="number"
-                                   ng-model="skill.trainedPercent" step="5"
-                                   ng-change="validateAbility(skill)"/>
-                            <span class="ability-max"> / {{skill.percent}}</span>
+    <div ng-repeat="subguild in reinc.guilds">
+        <div data-guild-list class="ability-box"
+             ng-if="subguild.chosenLevels > 0 && subguild.type === 'sub'">
+            <label>{{subguild.name}}</label>
+            <ul>
+                <div ng-repeat="skill in getAllAbilitiesByType('spell')">
+                    <li ng-if="skill.guild === subguild.name && subguild.chosenLevels > 0">
+                        <span class="ability-label">{{skill.name}}</span>
+                        <input id="spell-{{skill.name}}" class="ability-input" type="number"
+                               ng-model="skill.trainedPercent" step="5"
+                               ng-change="validateAbility(skill)"/>
+                        <span class="ability-max"> / {{skill.percent}}</span>
                                     <span class="max-ability-button">
                                         <button type="button" class="btn btn-primary"
                                                 ng-model="skill.trainedPercent" btn-checkbox
@@ -248,10 +246,9 @@
                                             Max
                                         </button>
                                     </span>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+                    </li>
+                </div>
+            </ul>
         </div>
     </div>
 </tab>
@@ -498,6 +495,123 @@
 </tab>
 </tabset>
 
+</div>
+<div id="total">
+    <table>
+        <tr>
+            <td class="total-label">Total level:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">QP needed:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">QP used:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">TP used:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Guild level exp:</td>
+            <td class="total-value"></td>
+        <tr>
+        <tr>
+            <td class="total-label">Race level exp:</td>
+            <td class="total-value"></td>
+        <tr>
+            <td class="total-label">Skill exp:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Spell exp:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Stat exp:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Total exp:</td>
+            <td class="total-value"></td>
+        </tr>
+    </table>
+    <br/>
+    <table>
+        <tr>
+            <td class="total-label">Strength:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Dexterity:</td>
+            <td class="total-value"></td>
+        <tr>
+            <td class="total-label">Constitution:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Intelligence:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Wisdom:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Charisma:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">HP regen:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">SP regen:</td>
+            <td class="total-value"></td>
+        </tr>
+
+    </table>
+    <br/>
+    <table>
+        <tr>
+            <td class="total-label">Acid:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Asphyxiation:</td>
+            <td class="total-value"></td>
+        <tr>
+            <td class="total-label">Cold:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Electric:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Fire:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Magical:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Physical:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Poison:</td>
+            <td class="total-value"></td>
+        </tr>
+        <tr>
+            <td class="total-label">Psionic:</td>
+            <td class="total-value"></td>
+        </tr>
+    </table>
+    <br/>
 </div>
 </body>
 </html>

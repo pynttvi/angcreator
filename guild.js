@@ -184,42 +184,68 @@ app.controller("GuildController", function ($scope, $http, $filter) {
             }
         }
 
+        function getStatsForSubguild(guild) {
+            var guildFileName = guild.name.replace(" ", "-").toLowerCase() + ".chr"
+            $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/' + guildFileName}).
+                success(function (data, status, headers, config) {
+                    var guildFile = atob(data.content);
+                    var lines = guildFile.split('\n');
+                    getStatsFromFile(guild, lines);
+                }).
+                error(function (data, status, headers, config) {
+                });
+        }
+
         function getStatsFromFile(guild, lines) {
-            var currentLevel = 0;
-            var levels = [];
-            for (var i = 0; i < lines.length; i++) {
-                var line = lines[i];
-                if (line.contains("|")) {
-                    var cols = line.split("|");
-                    if (cols[1].trim() > 0) {
-                        currentLevel += 1
+            if (guild.stats == null) {
+                var currentLevel = 0;
+                var levelStats = [];
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i];
+                    if (line.contains("|")) {
+                        var cols = line.split("|");
+                        if (cols[1].trim() > 0) {
+                            currentLevel += 1
 
-                        var stats = parseStatsFromColumn(cols[2]);
+                            var stats = parseStatsFromColumn(cols[2]);
 
-                        levels.push({
-                            level: currentLevel,
-                            stats: stats
-                        });
-                    }
-                    else if (cols[1].trim() == "Lvl" || cols[1].trim() == "=====") {
-                        alert(cols[1]);
-                    }
-                    else {
-                        var col = cols[2].trim();
-                        alert(col);
-                        if (col.length > 0)
-                            levels[i - 1].stats = parseStatsFromColumn(col);
+                            levelStats.push({
+                                level: currentLevel.toString(),
+                                stats: stats
+                            });
+                        }
+                        else if (cols[1].trim() == "Lvl" || cols[1].trim() == "=====") {
+                            //IGNORE
+                        }
+                        else {
+                            var col = cols[2].toString().trim();
+                            if (col != null) {
+                                var stat = parseStatsFromColumn(col);
+                                levelStats.push({
+                                    level: currentLevel.toString(),
+                                    stats: stat
+                                });
+                            }
+                        }
                     }
                 }
+
+                /*                guild.levelStats = levelStats;
+                 var testString = ""
+                 angular.forEach(guild.levelStats, function (ls, i) {
+                 angular.forEach(ls.stats, function (s, j) {
+                 testString += guild.name + " " + ls.level + " " + s.name + " " + s.amount + "\n";
+                 });
+                 });
+                 alert(testString);*/
             }
 
-            alert(levels[0].toString());
         }
 
         function parseStatsFromColumn(col) {
-            var stats = col.split(",");
             var myStats = []
-            if (col.length > 0) {
+            if (col.contains(",") == true) {
+                var stats = col.split(",");
                 angular.forEach(stats, function (stat, i) {
                     var amount = stat.split("(")[1];
                     if (amount) {
@@ -235,13 +261,13 @@ app.controller("GuildController", function ($scope, $http, $filter) {
                 if (amount) {
                     var myAmount = amount.replace(")", "");
                     var name = col.split("(")[0];
-                    alert(name + myAmount);
                     myStats.push({
                         amount: myAmount.trim(),
                         name: name
                     });
                 }
             }
+            return myStats;
         }
 
         function getSubguildsFromFile(guild, lines) {
@@ -254,13 +280,17 @@ app.controller("GuildController", function ($scope, $http, $filter) {
                     var cols = lines[i].split(" ");
                     var found = $filter('filter')($scope.guilds, {name: cols[0]});
                     if (found.length == 0) {
-                        $scope.guilds.push({
+
+                        var sub = {
                             name: cols[0],
                             levels: cols[1],
                             chosenLevels: "",
                             type: 'sub',
                             parent: guild.name
-                        });
+                        };
+
+                        getStatsForSubguild(sub);
+                        $scope.guilds.push(sub);
                     }
                 }
             }
