@@ -162,11 +162,11 @@
                         <input id="skill-{{skill.name}}" class="ability-input" type="number"
                                ng-model="skill.trainedPercent" value="0" step="5"
                                ng-change="validateAbility(skill)"/>
-                        <span class="ability-max"> / {{skill.percent}}</span>
+                        <span class="ability-max"> / {{skill.max}}</span>
                                     <span class="max-ability-button">
                                         <button type="button" class="btn btn-primary"
                                                 ng-model="skill.trainedPercent" btn-checkbox
-                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                                btn-checkbox-true="{{skill.max}}" btn-checkbox-false="">
                                             Max
                                         </button>
                                     </span>
@@ -187,11 +187,11 @@
                         <input id="skill-{{skill.name}}" class="ability-input" type="number"
                                ng-model="skill.trainedPercent" step="5"
                                ng-change="validateAbility(skill)"/>
-                        <span class="ability-max"> / {{skill.percent}}</span>
+                        <span class="ability-max"> / {{skill.max}}</span>
                                     <span class="max-ability-button">
                                         <button type="button" class="btn btn-primary"
                                                 ng-model="skill.trainedPercent" btn-checkbox
-                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                                btn-checkbox-true="{{skill.max}}" btn-checkbox-false="">
                                             Max
                                         </button>
                                     </span>
@@ -214,10 +214,10 @@
                         <input id="spell-{{skill.name}}" class="ability-input" type="number"
                                ng-model="skill.trainedPercent" value="0" step="5"
                                ng-change="validateAbility(skill)"/>
-                        <span class="ability-max"> / {{skill.percent}} </span>
+                        <span class="ability-max"> / {{skill.max}} </span>
                         <span class="max-ability-button">
                             <button type="button" class="btn btn-primary" ng-model="skill.trainedPercent" btn-checkbox
-                                    btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                    btn-checkbox-true="{{skill.max}}" btn-checkbox-false="">
                                 Max
                             </button>
                         </span>
@@ -238,11 +238,11 @@
                         <input id="spell-{{skill.name}}" class="ability-input" type="number"
                                ng-model="skill.trainedPercent" step="5"
                                ng-change="validateAbility(skill)"/>
-                        <span class="ability-max"> / {{skill.percent}}</span>
+                        <span class="ability-max"> / {{skill.max}}</span>
                                     <span class="max-ability-button">
                                         <button type="button" class="btn btn-primary"
                                                 ng-model="skill.trainedPercent" btn-checkbox
-                                                btn-checkbox-true="{{skill.percent}}" btn-checkbox-false="">
+                                                btn-checkbox-true="{{skill.max}}" btn-checkbox-false="">
                                             Max
                                         </button>
                                     </span>

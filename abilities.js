@@ -4,7 +4,6 @@
 app.controller("AbilitiesController", function ($scope, $http, $filter) {
 
 
-
     $scope.getAbilities = function () {
         setTimeout(function () {
             angular.forEach($scope.reinc.guilds, function (guild, i) {
@@ -93,6 +92,7 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
             name: abilityName.trim(),
             type: type,
             percent: percent,
+            max: percent,
             level: level,
             guild: guild.name
         };
@@ -108,12 +108,6 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
         }
         return toIndex;
     }
-
-
-
-
-
-
 
 
     $scope.getAllAbilitiesByType = function (type) {
@@ -149,7 +143,7 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
     }
 
     $scope.validateAbility = function (ability) {
-        var max = parseInt(ability.percent);
+        var max = parseInt(ability.max);
 
         if (ability.trainedPercent > 10)
             ability.trainedPercent = Math.round(( ability.trainedPercent / 5)) * 5;

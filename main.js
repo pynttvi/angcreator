@@ -7,6 +7,7 @@ app.controller("MainController", function ($scope, $http, $filter) {
 
 
     $scope.reinc = {
+        race: null,
         qp: 0,
         freeLevels: 0,
         guilds: [],
@@ -52,14 +53,40 @@ app.controller("MainController", function ($scope, $http, $filter) {
     $scope.$watch('reinc', function () {
 
         //FIXERS
-
+        if ($scope.reinc.race != null)
+            fixMaxes()
 
 
         //COUNTERS
 
 
-
     }, true);
+
+
+    function fixMaxes() {
+
+        var skillFactor = parseInt($scope.reinc.race.skimax);
+        var spellFactor = parseInt($scope.reinc.race.spemax);
+
+        if ($scope.reinc.wishes.greater.knowledge == true) {
+            skillFactor += 10
+            spellFactor += 10
+        }
+        if ($scope.reinc.wishes.lesser.knowledge == true) {
+            skillFactor += 5
+            spellFactor += 5
+        }
+
+        angular.forEach($scope.reinc.guilds, function (guild, i) {
+            angular.forEach(guild.abilities, function (ability, j) {
+                if (ability.type == 'skill')
+                    ability.max = Math.round((ability.percent / 5 * skillFactor) / 100) * 5
+                if (ability.type == 'spell')
+                    ability.max = Math.round((ability.percent / 5 * spellFactor) / 100) * 5
+
+            });
+        });
+    }
 
     $scope.validateStat = function (stat) {
         var myStat = parseInt(stat);
