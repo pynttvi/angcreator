@@ -27,7 +27,7 @@ app.controller("RaceController", function ($scope, $http) {
 
 
     function getRaces() {
-        $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/races.txt'}).
+        $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/races.txt'}).
             success(function (data, status, headers, config) {
 
                 var raceFile = atob(data.content);

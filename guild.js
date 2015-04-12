@@ -131,7 +131,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
         };
 
         function getGuilds() {
-            $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/guilds.chr'}).
+            $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/guilds.chr'}).
                 success(function (data, status, headers, config) {
                     var guild = atob(data.content);
                     var lines = guild.split('\n');
@@ -162,7 +162,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
             var subguilds = getSubguildsByGuild(guild);
             if (guild.chosenLevels > 0) {
                 var guildFileName = guild.name.replace(" ", "-").toLowerCase() + ".chr"
-                $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/' + guildFileName}).
+                $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/' + guildFileName}).
                     success(function (data, status, headers, config) {
 
                         var guildFile = atob(data.content);
@@ -186,7 +186,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
 
         function getStatsForSubguild(guild) {
             var guildFileName = guild.name.replace(" ", "-").toLowerCase() + ".chr"
-            $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/' + guildFileName}).
+            $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/' + guildFileName}).
                 success(function (data, status, headers, config) {
                     var guildFile = atob(data.content);
                     var lines = guildFile.split('\n');

@@ -5,6 +5,16 @@ var app = angular.module('Angcreator', ['ui.bootstrap']);
 
 app.controller("MainController", function ($scope, $http, $filter) {
 
+    $scope.$watch('$viewContentLoaded', function () {
+
+        getAbilityCostFile("skills");
+        getAbilityCostFile("spells");
+    });
+
+    $scope.skillCost = [];
+    $scope.spellCost = [];
+
+    $scope.totalSkillCost = 0;
 
     $scope.reinc = {
         race: null,
@@ -54,10 +64,11 @@ app.controller("MainController", function ($scope, $http, $filter) {
 
         //FIXERS
         if ($scope.reinc.race != null)
-            fixMaxes()
+            fixMaxes();
 
 
         //COUNTERS
+        countAbilityExp();
 
 
     }, true);
@@ -88,6 +99,33 @@ app.controller("MainController", function ($scope, $http, $filter) {
         });
     }
 
+
+    function countAbilityExp() {
+
+        var costList = [0, 1, 2, 4, 8, 13, 22, 38, 64, 109, 184, 310, 523, 882, 1487, 2506,
+            4222, 7115, 11989, 20202, 34040, 999999, 999999, 999999];
+
+        var skillCostListSize = $scope.skillCost.length;
+        angular.forEach($scope.reinc.guilds, function (guild, i) {
+            angular.forEach(guild.abilities, function (ability, j) {
+                if (ability.type == 'skill') {
+                    var skillcost;
+                    for (var i = 0; i < skillCostListSize; i++) {
+                        if (ability.name == $scope.skillCost[i])
+                            skillcost = $scope.skillCost[i];
+                    }
+                    if (skillcost != null) {
+                        var costListIndex = parseInt(ability.trainedPercent) / 5;
+                        var cost = costList[costListIndex];
+                        alert(cost * ($scope.reinc.race.skicost / 100));
+                    }
+                }
+            });
+        });
+
+    }
+
+
     $scope.validateStat = function (stat) {
         var myStat = parseInt(stat);
         if (myStat > 50)
@@ -95,6 +133,44 @@ app.controller("MainController", function ($scope, $http, $filter) {
 
         if (myStat < 0)
             stat = 0;
+    }
+
+
+    function getAbilityCostFile(type) {
+        if ($scope.skillCost.length < 1) {
+            $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/' + type + '.chr'}).
+                success(function (data, status, headers, config) {
+                    var guildFile = atob(data.content);
+                    var lines = guildFile.split('\n');
+
+                    angular.forEach(lines, function (line, i) {
+                        var cols = line.split(":");
+                        var name = cols[0];
+                        var cost = cols[1];
+                        if (name != null && cost != null) {
+                            if (type == 'skills') {
+                                $scope.skillCost.push({
+                                    name: name,
+                                    cost: cost
+                                });
+                            }
+
+                            if (type == 'spells') {
+                                $scope.spellCost.push({
+                                    name: name,
+                                    cost: cost
+                                });
+                            }
+                        }
+
+                    });
+
+                }).
+                error(function (data, status, headers, config) {
+                    alert("error:" + status);
+                    alert("error:" + data);
+                });
+        }
     }
 
 

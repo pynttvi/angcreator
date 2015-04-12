@@ -15,7 +15,7 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
 
     function getAbilities(guild) {
         var fileName = guild.name.toLowerCase() + ".chr"
-        $http({method: 'GET', url: '//api.github.com/repos/pynttvi/char-creator-data/contents/' + fileName}).
+        $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/' + fileName}).
             success(function (data, status, headers, config) {
 
                 var guildFile = atob(data.content);
