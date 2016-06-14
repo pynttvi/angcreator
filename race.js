@@ -27,7 +27,7 @@ app.controller("RaceController", function ($scope, $http) {
 
 
     function getRaces() {
-        $http({method: 'GET', url: '//rawgit.com/pynttvi/char-creator-data/contents/races.txt'}).
+        $http({method: 'GET', url: 'https://cdn.rawgit.com/juuussi/zCreator_data/master/data/races.chr'}).
             success(function (data, status, headers, config) {
 
                 var raceFile = atob(data.content);
