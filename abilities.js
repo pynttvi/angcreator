@@ -15,7 +15,7 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
 
     function getAbilities(guild) {
         var fileName = guild.name.toLowerCase() + ".chr"
-        $http({method: 'GET', url: 'https://cdn.rawgit.com/juuussi/zCreator_data/master/data/' + fileName}).
+        $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + fileName}).
             success(function (data, status, headers, config) {
 
                 var guildFile = atob(data.content);

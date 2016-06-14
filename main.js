@@ -138,7 +138,7 @@ app.controller("MainController", function ($scope, $http, $filter) {
 
     function getAbilityCostFile(type) {
         if ($scope.skillCost.length < 1) {
-            $http({method: 'GET', url: 'https://cdn.rawgit.com/juuussi/zCreator_data/master/data/' + type + '.chr'}).
+            $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + type + '.chr'}).
                 success(function (data, status, headers, config) {
                     var guildFile = atob(data.content);
                     var lines = guildFile.split('\n');

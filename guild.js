@@ -131,7 +131,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
         };
 
         function getGuilds() {
-            $http({method: 'GET', url: 'https://cdn.rawgit.com/juuussi/zCreator_data/master/data/guilds.chr'}).
+            $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/guilds.chr'}).
                 success(function (data, status, headers, config) {
                     var guild = atob(data.content);
                     var lines = guild.split('\n');
