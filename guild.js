@@ -133,7 +133,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
         function getGuilds() {
             $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/guilds.chr'}).
                 success(function (data, status, headers, config) {
-                    var guild = data.content;
+                    var guild = data;
                     var lines = guild.split('\n');
                     for (var i = 0; i < lines.length; i++) {
                         var cols = lines[i].split(" ");
@@ -165,7 +165,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
                 $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + guildFileName}).
                     success(function (data, status, headers, config) {
 
-                        var guildFile = data.content;
+                        var guildFile = data;
                         var lines = guildFile.split('\n');
 
                         getStatsFromFile(guild, lines);
@@ -188,7 +188,7 @@ app.controller("GuildController", function ($scope, $http, $filter) {
             var guildFileName = guild.name.replace(" ", "-").toLowerCase() + ".chr"
             $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + guildFileName}).
                 success(function (data, status, headers, config) {
-                    var guildFile = atob(data.content);
+                    var guildFile = data;
                     var lines = guildFile.split('\n');
                     getStatsFromFile(guild, lines);
                 }).

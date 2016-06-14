@@ -29,8 +29,7 @@ app.controller("RaceController", function ($scope, $http) {
     function getRaces() {
         $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/races.chr'}).
             success(function (data, status, headers, config) {
-
-                var raceFile = data.content;
+                var raceFile = data;
                 var lines = raceFile.split('\n');
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i].lastIndexOf("#", 0) !== 0) {

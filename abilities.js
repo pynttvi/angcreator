@@ -18,7 +18,7 @@ app.controller("AbilitiesController", function ($scope, $http, $filter) {
         $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + fileName}).
             success(function (data, status, headers, config) {
 
-                var guildFile = data.content;
+                var guildFile = data;
                 var lines = guildFile.split('\n');
                 var abilities = getAbilitiesFromLines(lines, guild);
                 var myAbilities = getAbilitiesForChosenLevel(abilities, guild.chosenLevels);

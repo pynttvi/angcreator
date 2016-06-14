@@ -140,7 +140,7 @@ app.controller("MainController", function ($scope, $http, $filter) {
         if ($scope.skillCost.length < 1) {
             $http({method: 'GET', url: 'https://rawgit.com/juuussi/zCreator_data/master/data/' + type + '.chr'}).
                 success(function (data, status, headers, config) {
-                    lines = data.content.split('\n');
+                    lines = data.split('\n');
 
                     angular.forEach(lines, function (line, i) {
                         var cols = line.split(":");
